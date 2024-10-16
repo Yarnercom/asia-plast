@@ -8,6 +8,9 @@ const nextConfig = {
       },
     ]
   },
+  images: {
+    domains: ['gratisography.com'], // Можно позже удалить, картинки проверял по этому домену
+  },
 }
 
 export default nextConfig
