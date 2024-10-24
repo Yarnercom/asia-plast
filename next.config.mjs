@@ -9,7 +9,7 @@ const nextConfig = {
     ]
   },
   images: {
-    domains: ['gratisography.com'], // Можно позже удалить, картинки проверял по этому домену
+    domains: ['example.com', 'www.hubspot.com', 'gratisography.com', 'cdn.prod.website-files.com', 'marketplace.canva.com'], // Можно позже удалить, картинки проверял по этому домену
   },
 }
 

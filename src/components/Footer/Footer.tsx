@@ -5,7 +5,7 @@ import Circle from '@/assets/circle.svg'
 
 const Footer = () => {
     return (
-        <footer className='w-full relative pt-[96px] px-[127px] bg-[#008ECC] overflow-hidden'>
+        <footer className='w-full relative pt-[96px] px-[127px] bg-[#008ECC] overflow-hidden mt-[50px]'>
             <Image
                 className="absolute right-[-50px] top-[-50px] w-[300px] h-[300px]"
                 width={100}

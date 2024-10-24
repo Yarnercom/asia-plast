@@ -16,10 +16,14 @@ const Toolbar: React.FC<ToolbarProps> = ({title, link}) => {
                 </h2>
                 <div className="absolute left-0 right-0 bottom-0 h-[2px] w-[160px] bg-[#008ECC] rounded-full"/>
             </div>
-            <Link href={link} className='flex items-center gap-[12px]'>
-                <span>Смотреть всё</span>
-                <IconChevronRight color={'#008ECC'} size={15}/>
-            </Link>
+            {
+                link && (
+                    <Link href={link} className='flex items-center gap-[12px]'>
+                        <span>Смотреть всё</span>
+                        <IconChevronRight color={'#008ECC'} size={15}/>
+                    </Link>
+                )
+            }
         </div>
     );
 };

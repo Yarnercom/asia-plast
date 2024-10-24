@@ -1,5 +1,5 @@
 
-const Delivery = () => {
+const DeliveryPage = () => {
     return (
         <div>
             Delivery
@@ -7,4 +7,4 @@ const Delivery = () => {
     );
 };
 
-export default Delivery;
+export default DeliveryPage;
