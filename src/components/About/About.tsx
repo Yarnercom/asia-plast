@@ -5,6 +5,7 @@ import img2 from '@/assets/imageForAboutUs/2.jpg'
 import img3 from '@/assets/imageForAboutUs/3.jpg'
 import img4 from '@/assets/imageForAboutUs/4.png'
 import img5 from '@/assets/imageForAboutUs/5.jpg'
+import TitleInternalComponents from "@/components/TitleInternalComponents/TitleInternalComponents";
 
 const About = () => {
 
@@ -43,7 +44,7 @@ const About = () => {
 
     return (
         <div className='container mx-auto px-4 py-8'>
-            <h1 className='text-4xl text-center font-bold mb-10'>О компании «АзияПласт»</h1>
+            <TitleInternalComponents title={'О компании «АзияПласт»'}/>
 
             <p className='text-lg leading-relaxed mb-12 text-center max-w-3xl mx-auto'>
                 ТМ «АзияПЛАСТ», являющаяся одним из подразделений компании «Профикс-Юг», производит и реализует изделия из термопластичных полимеров. Ассортимент продукции заинтересует производителей различного направления.

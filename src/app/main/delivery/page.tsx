@@ -1,8 +1,9 @@
+import Delivery from "@/components/Delivery/Delivery";
 
 const DeliveryPage = () => {
     return (
         <div>
-            Delivery
+            <Delivery/>
         </div>
     );
 };

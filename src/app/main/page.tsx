@@ -14,14 +14,8 @@ export const metadata: Metadata = { title: 'Главная' }
 export default async function Main() {
 
     const categories = await CategoriesApi.getAll()
-    const categoriesList = categories.data
-
     const news = await NewsApi.getAll()
-    const newsList = news.data
-
     const certificate = await CertificatesApi.getAll()
-    const certificateList = certificate.data
-
     const partner = [
         {
             id: 1,
@@ -80,18 +74,15 @@ export default async function Main() {
             isActive: true,
         },
     ];
-
     const vacancy = await VacanciesApi.getAll()
-    const vacancyList = vacancy.data
 
     return (
         <div>
-            <Categories categories={categoriesList}/>
-            <News news={newsList}/>
-            <Certificate certificate={certificateList}/>
+            <Categories categories={categories.data}/>
+            <News news={news.data}/>
+            <Certificate certificate={certificate.data}/>
             <Partner partner={partner}/>
-            <Vacancy vacancy={vacancyList}/>
-            home
+            <Vacancy vacancy={vacancy.data}/>
         </div>
     );
 };

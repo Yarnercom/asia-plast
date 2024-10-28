@@ -7,6 +7,8 @@ import { IconChevronRight, IconPhotoOff } from '@tabler/icons-react';
 import Link from "next/link";
 import Image from "next/image";
 import ViewSwitcher from "@/components/ViewSwitcher";
+import { usePathname } from 'next/navigation';
+import TitleInternalComponents from "@/components/TitleInternalComponents/TitleInternalComponents";
 
 interface NewsProps {
     news: NewsType[] | null;
@@ -15,6 +17,7 @@ interface NewsProps {
 const News: React.FC<NewsProps> = ({ news }) => {
     const [viewMode, setViewMode] = useState<'card' | 'list'>('card');
     const [isImageBroken, setIsImageBroken] = useState(false);
+    const pathname = usePathname();
 
     if (!news || news.length === 0) {
         return <p></p>;
@@ -22,7 +25,9 @@ const News: React.FC<NewsProps> = ({ news }) => {
 
     return (
         <section className='container m-auto mb-[60px]'>
+            {pathname === '/main' ? (
             <Toolbar title={'Новости'} link={'/main/news'} />
+            ) : <TitleInternalComponents title={'Новости'}/>}
 
             <ViewSwitcher viewMode={viewMode} onChange={setViewMode} />
 
@@ -58,7 +63,7 @@ const News: React.FC<NewsProps> = ({ news }) => {
                                 </p>
                             </div>
                             <div className={`p-6 pt-0 w-[196px]`}>
-                                <Link href={'/'}
+                                <Link href={`/main/news/${item.id}`}
                                       className="flex items-center gap-2 select-none rounded-lg bg-[#008ECC] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.90] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
                                     Подробнее
                                     <IconChevronRight color={"#FFF"} size={20}/>

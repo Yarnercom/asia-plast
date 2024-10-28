@@ -2,6 +2,7 @@ import Image from "next/image";
 import Car from '@/assets/iconoir_delivery-truck.svg'
 import { IconPhone } from '@tabler/icons-react'
 import Account from "@/assets/user.svg";
+import Link from "next/link";
 
 export default async function HeaderTop() {
     return (
@@ -10,9 +11,11 @@ export default async function HeaderTop() {
                 <p className='text-[#666666]'>Приветствуем вас в АзияПласт!</p>
 
                 <ul className='flex items-center gap-[20px]'>
-                    <li className='flex items-center gap-[6px] text-[#666666] cursor-pointer'>
-                        <Image width={18} height={18} src={Car} alt={'car'}/>
-                        Доставка
+                    <li className=''>
+                        <Link className='flex items-center gap-[6px] text-[#666666] cursor-pointer' href={'/main/delivery'}>
+                            <Image width={18} height={18} src={Car} alt={'car'}/>
+                            Доставка
+                        </Link>
                     </li>
                     <li className='flex items-center gap-[6px] text-[#666666] cursor-pointer'>
                         <IconPhone size={18} color={"#008ECC"}/>

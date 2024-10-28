@@ -5,6 +5,8 @@ import Loader from "@/components/Loader/Loader";
 import Image from "next/image";
 import Link from "next/link";
 import Toolbar from "@/components/Toolbar/Toolbar";
+import TitleInternalComponents from "@/components/TitleInternalComponents/TitleInternalComponents";
+import {usePathname} from "next/navigation";
 
 interface PartnerData {
     id: number;
@@ -30,12 +32,16 @@ const Partner: React.FC<PartnerProps> = ({ partner }) => {
         return <Loader />;
     }
 
+    const pathname = usePathname();
+
     return (
         <section className='container m-auto mb-[60px]'>
 
-            <Toolbar title={'Партнеры'} link={'/main/partners'} />
+            {pathname === '/main' ? (
+                <Toolbar title={'Новости'} link={'/main/partners'} />
+            ) : <TitleInternalComponents title={'Партнеры'}/>}
 
-            <div className='flex items-center gap-3 justify-center'>
+            <div className='flex items-center gap-3 justify-center mt-[40px]'>
                 {partner && partner.map((part) => (
                     <div key={part.id} className="flex justify-center items-center">
                         <Link
@@ -44,7 +50,7 @@ const Partner: React.FC<PartnerProps> = ({ partner }) => {
                         >
                             <Image
                                 className='object-cover w-[100px] h-[100px]'
-                                src={part?.logoImage && 'https://www.hubspot.com/hs-fs/hubfs/Starbucks_Corporation_Logo_2011.svg.png?width=400&height=405&name=Starbucks_Corporation_Logo_2011.svg.png'}
+                                src={part?.logoImage ? 'https://www.hubspot.com/hs-fs/hubfs/Starbucks_Corporation_Logo_2011.svg.png?width=400&height=405&name=Starbucks_Corporation_Logo_2011.svg.png' : ''}
                                 alt={part?.logoImageName || 'logo'}
                                 width={550}
                                 height={550}
@@ -53,6 +59,11 @@ const Partner: React.FC<PartnerProps> = ({ partner }) => {
                                 className="absolute opacity-0 group-hover:opacity-100 group-hover:text-gray-700 group-hover:text-md group-hover:-translate-y-10 duration-500"
                             >
                                 {part.name}
+                            </span>
+                            <span
+                                className="text-center absolute opacity-0 group-hover:opacity-100 group-hover:text-gray-700 group-hover:text-md group-hover:-translate-y-[-110px] duration-500"
+                            >
+                                {part.description}
                             </span>
                         </Link>
                     </div>

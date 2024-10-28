@@ -1,23 +1,29 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import {usePathname} from "next/navigation";
 import Link from "next/link";
-import { cn } from "@/utils/cn";
-import { useState, useEffect } from "react";
+import {cn} from "@/utils/cn";
+import {useState, useEffect} from "react";
+
+interface NavItem {
+    title: string;
+    path: string;
+    subcategories?: string[];
+}
 
 const NavBar = () => {
     const pathname = usePathname();
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
     const [isHovered, setIsHovered] = useState(false);
 
-    const navItems = [
-        { title: "Главная", path: "/main" },
-        { title: "О компании", path: "/main/about" },
-        { title: "Новости", path: "/main/news" },
-        { title: "Доставка", path: "/main/delivery", subcategories: ["Услуга 1", "Услуга 2"] },
-        { title: "Вакансии", path: "/main/jobs" },
-        { title: "Каталог", path: "/main/catalog", subcategories: ["Продукт 1", "Продукт 2", "Продукт 3", "Продукт 4"] },
-        { title: "Партнеры", path: "/main/partners" },
+    const navItems: NavItem[] = [
+        {title: "Главная", path: "/main"},
+        {title: "О компании", path: "/main/about"},
+        {title: "Новости", path: "/main/news"},
+        {title: "Доставка", path: "/main/delivery"},
+        {title: "Вакансии", path: "/main/vacancy"},
+        {title: "Каталог", path: "/main/catalog", subcategories: ["Продукт 1", "Продукт 2", "Продукт 3", "Продукт 4"]},
+        {title: "Партнеры", path: "/main/partners"},
     ];
 
     useEffect(() => {
@@ -31,7 +37,7 @@ const NavBar = () => {
 
     return (
         <div className="relative">
-            <div className="flex-wrap items-center flex gap-[10px]  group relative">
+            <div className="flex-wrap items-center flex gap-[10px] group relative">
                 {navItems.map((item, index) => {
                     const isActive = pathname === item.path;
 
@@ -48,7 +54,7 @@ const NavBar = () => {
                             <Link href={item.path}>
                                 <div
                                     className={cn(
-                                        `whitespace-nowrap hover:text-[#008ECC] text-sm rounded-[18px] py-[9px] px-[14px] transition-colors duration-200`,
+                                        `whitespace-nowrap hover:text-[#222222] text-sm rounded-[18px] py-[9px] px-[14px] transition-colors duration-200`,
                                         isActive ? "text-[#FFF] bg-[#008ECC]" : "text-[#222222] bg-[#F3F9FB]"
                                     )}
                                 >
@@ -68,8 +74,8 @@ const NavBar = () => {
                         <div className="max-w-screen-xl mx-auto flex justify-start gap-[20px] px-[20px]">
                             {navItems[activeIndex].subcategories.map((subcategory) => (
                                 <Link href={'/'}
-                                    key={subcategory}
-                                    className="text-sm text-[#222] font-normal whitespace-nowrap hover:text-[#008ECC]"
+                                      key={subcategory}
+                                      className="text-sm text-[#222] font-normal whitespace-nowrap hover:text-[#008ECC]"
                                 >
                                     {subcategory}
                                 </Link>

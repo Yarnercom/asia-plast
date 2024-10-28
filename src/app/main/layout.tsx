@@ -4,9 +4,9 @@ import Footer from "@/components/Footer/Footer";
 
 export default async function MainLayout({ children }: { children: ReactNode }) {
     return (
-        <div>
+        <div className='flex flex-col min-h-screen'>
             <Header/>
-            <main>
+            <main className='flex-grow'>
                 {children}
             </main>
             <Footer/>

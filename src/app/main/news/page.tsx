@@ -1,10 +1,12 @@
+import News from "@/components/News/News";
+import {NewsApi} from "@/services/news/api";
 
-const NewsPage = () => {
+export default async function NewsPage()  {
+
+    const news = await NewsApi.getAll()
     return (
         <div>
-            News
+            <News news={news.data} />
         </div>
     );
 };
-
-export default NewsPage;

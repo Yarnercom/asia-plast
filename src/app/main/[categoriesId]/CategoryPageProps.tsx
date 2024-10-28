@@ -100,8 +100,8 @@ export default function CategoryPage({ categoriesList, subcategoriesList }: Cate
                 <div className={`w-full mt-[30px] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3`}>
                     {filteredSubcategories.map((subcategory) => (
                         <div key={subcategory.id} className="w-full">
-                            <div onClick={() => handleSubcategoryClick(selectedCategoryId, subcategory.id)} className="cursor-pointer relative block w-full bg-[#f2f8f9] rounded-md p-8 text-decoration-none z-0 hover:text-white overflow-hidden before:absolute before:top-[-4rem] before:right-[-4rem] before:bg-[#008ECC] before:h-8 before:w-8 before:rounded-full before:z-[-1] before:transition-transform before:duration-300 hover:before:scale-[27] hover:before:transition-transform">
-                                <div className="fill-violet-500 w-12 transition-all duration-300 group-hover:fill-white">
+                            <div onClick={() => handleSubcategoryClick(selectedCategoryId | 0, subcategory.id)} className="cursor-pointer relative block w-full bg-[#f2f8f9] rounded-md p-8 text-decoration-none z-0 hover:text-white overflow-hidden before:absolute before:top-[-4rem] before:right-[-4rem] before:bg-[#008ECC] before:h-8 before:w-11 before:rounded-full before:z-[-1] before:transition-transform before:duration-500 hover:before:scale-[27] hover:before:transition-transform">
+                                <div className="fill-violet-500 w-14 transition-all duration-500 group-hover:fill-white">
                                     {subcategory.subcategoryImage ? (
                                         <Image className='w-full h-full object-cover' width={500} height={500}
                                                src={subcategory.subcategoryImage || ''}
@@ -113,7 +113,7 @@ export default function CategoryPage({ categoriesList, subcategoriesList }: Cate
                                     )}
                                 </div>
                                 <div>
-                                    <p className="font-bold text-xl group-hover:text-white transition-all ease-out duration-300">
+                                    <p className="font-bold text-xl group-hover:text-white transition-all ease-out duration-500">
                                         {subcategory.name}
                                     </p>
                                     <p className="small text-[14px]"></p>
