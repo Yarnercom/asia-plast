@@ -1,3 +1,5 @@
+"use client"
+
 import React, { useState } from 'react';
 import { News as NewsType } from "@/services/news/entity";
 import { IconPhotoOff } from "@tabler/icons-react";

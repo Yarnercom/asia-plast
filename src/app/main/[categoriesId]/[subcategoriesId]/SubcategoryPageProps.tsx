@@ -8,9 +8,12 @@ interface SubcategoryPageProps {
 }
 
 const SubcategoryPage: React.FC<SubcategoryPageProps> = () => {
+
     return (
         <div>
-Подкатегории
+            <h1>Подкатегории</h1>
+            {/*<p>Category ID: {categoryId}</p>*/}
+            {/*<p>Subcategory ID: {subcategoryId}</p>*/}
         </div>
     );
 };

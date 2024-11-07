@@ -7,6 +7,7 @@ import Link from "next/link";
 import Toolbar from "@/components/Toolbar/Toolbar";
 import TitleInternalComponents from "@/components/TitleInternalComponents/TitleInternalComponents";
 import {usePathname} from "next/navigation";
+import './Partners.css'
 
 interface PartnerData {
     id: number;
@@ -38,37 +39,22 @@ const Partner: React.FC<PartnerProps> = ({ partner }) => {
         <section className='container m-auto mb-[60px]'>
 
             {pathname === '/main' ? (
-                <Toolbar title={'Новости'} link={'/main/partners'} />
+                <Toolbar title={'Партнеры'} link={'/main/partners'} />
             ) : <TitleInternalComponents title={'Партнеры'}/>}
 
-            <div className='flex items-center gap-3 justify-center mt-[40px]'>
+            <div className="cards-list">
+
                 {partner && partner.map((part) => (
-                    <div key={part.id} className="flex justify-center items-center">
-                        <Link
-                            className="group flex justify-center p-1 px-[30px] rounded-md drop-shadow-xl from-gray-800 text-white font-semibold hover:translate-y-2 transition-all duration-250 hover:from-[#331029] hover:to-[#310413]"
-                            href="/"
-                        >
-                            <Image
-                                className='object-cover w-[100px] h-[100px]'
-                                src={part?.logoImage ? 'https://www.hubspot.com/hs-fs/hubfs/Starbucks_Corporation_Logo_2011.svg.png?width=400&height=405&name=Starbucks_Corporation_Logo_2011.svg.png' : ''}
-                                alt={part?.logoImageName || 'logo'}
-                                width={550}
-                                height={550}
-                            />
-                            <span
-                                className="absolute opacity-0 group-hover:opacity-100 group-hover:text-gray-700 group-hover:text-md group-hover:-translate-y-10 duration-500"
-                            >
-                                {part.name}
-                            </span>
-                            <span
-                                className="text-center absolute opacity-0 group-hover:opacity-100 group-hover:text-gray-700 group-hover:text-md group-hover:-translate-y-[-110px] duration-500"
-                            >
-                                {part.description}
-                            </span>
-                        </Link>
-                    </div>
+                    <Link href={`/main/partners/${part.id}`} key={part.id} className="card 1">
+                        <div className="card_image"> <Image className='object-cover' width={800} height={650} src={part?.logoImage ? 'https://www.hubspot.com/hs-fs/hubfs/Starbucks_Corporation_Logo_2011.svg.png?width=400&height=405&name=Starbucks_Corporation_Logo_2011.svg.png' : ''} alt={'/'} /> </div>
+                        <div className="card_title title-white">
+                            <p>{part.name}</p>
+                        </div>
+                    </Link>
                 ))}
+
             </div>
+
         </section>
     );
 };

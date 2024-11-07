@@ -15,7 +15,7 @@ const Footer = () => {
             />
             <div className='flex items-start justify-center gap-[100px]'>
                 <div className='mr-[60px]'>
-                    <h2 className='text-[30px] text-[#FFF] mb-[20px]'>АзияПласт</h2>
+                    <h2 className='text-[30px] text-[#FFF] mb-[20px]'>Лого</h2>
                     <div className='flex flex-col gap-4'>
                         <p className='text-[#FFF]'>Контакты</p>
                         <div className='flex items-start gap-3'>
