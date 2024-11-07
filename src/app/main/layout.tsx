@@ -6,7 +6,7 @@ export default async function MainLayout({ children }: { children: ReactNode }) 
     return (
         <div className='flex flex-col min-h-screen'>
             <Header/>
-            <main className='flex-grow'>
+            <main className='flex-grow mx-[30px]'>
                 {children}
             </main>
             <Footer/>

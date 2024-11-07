@@ -6,9 +6,9 @@ import Link from "next/link";
 
 export default async function HeaderTop() {
     return (
-        <div className='py-[14px] bg-[#F5F5F5]'>
+        <div className='py-[14px] bg-[#F5F5F5] px-[30px]'>
             <div className='container m-auto flex items-center justify-between'>
-                <p className='text-[#666666]'>Приветствуем вас в АзияПласт!</p>
+                <p className='text-[#666666]'>Приветствуем вас в Лого!</p>
 
                 <ul className='flex items-center gap-[20px]'>
                     <li className=''>
