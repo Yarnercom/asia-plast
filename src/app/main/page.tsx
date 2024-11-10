@@ -10,7 +10,7 @@ import {VacanciesApi} from "@/services/vacancies/api";
 import Vacancy from "@/components/Vacancy/Vacancy";
 import {PartnersApi} from "@/services/partners/api";
 
-export const metadata: Metadata = { title: 'Главная' }
+export const metadata: Metadata = { title: 'АзияПласт' }
 
 export default async function Main() {
 

@@ -1,23 +1,30 @@
+"use client"
+
 import React from 'react';
-import { IconBrandWhatsapp, IconPhone } from '@tabler/icons-react'
-import Image from "next/image";
-import Circle from '@/assets/circle.svg'
+import { IconBrandWhatsapp, IconPhone } from '@tabler/icons-react';
+import Image from 'next/image';
+import Link from 'next/link';
+import Maps from '@/assets/map/карта.png';
+import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 
 const Footer = () => {
+    const links = [
+        { title: "Главная", path: "/main" },
+        { title: "О компании", path: "/main/about" },
+        { title: "Новости", path: "/main/news" },
+        { title: "Доставка", path: "/main/delivery" },
+        { title: "Вакансии", path: "/main/vacancy" },
+        { title: "Каталог", path: "/main/categories" },
+        { title: "Партнеры", path: "/main/partners" },
+    ];
+
     return (
         <footer className='w-full relative pt-[96px] px-[127px] bg-[#008ECC] overflow-hidden mt-[50px]'>
-            <Image
-                className="absolute right-[-50px] top-[-50px] w-[300px] h-[300px]"
-                width={100}
-                height={100}
-                src={Circle}
-                alt={'circle'}
-            />
             <div className='flex items-start justify-center gap-[100px]'>
                 <div className='mr-[60px]'>
-                    <h2 className='text-[30px] text-[#FFF] mb-[20px]'>Лого</h2>
+                    <h2 className='text-[30px] text-[#FFF] mb-[20px]'>АзияПласт</h2>
                     <div className='flex flex-col gap-4'>
-                        <p className='text-[#FFF]'>Контакты</p>
+                        <Link href={'/main/contact'} className='text-[#FFF]'>Контакты</Link>
                         <div className='flex items-start gap-3'>
                             <IconBrandWhatsapp color={"#FFF"} size={40}/>
                             <div className='text-[#FFF]'>
@@ -37,22 +44,21 @@ const Footer = () => {
                 <div>
                     <h4 className='text-[#FFF] text-[20px] border-b border-[#FFF]'>Категории</h4>
                     <ul className='text-[#FFF] text-[16px] list-disc ml-[20px] mt-[15px] flex flex-col gap-3 justify-center'>
-                        <li>бла бла</li>
-                        <li>бла бла</li>
-                        <li>бла бла</li>
-                        <li>бла бла</li>
-                        <li>бла бла</li>
+                        {
+                            links.map((link, idx) => (
+                                <li key={idx} className='border-1 hover:border-b-white'>
+                                    <Link href={link.path}>{link.title}</Link>
+                                </li>
+                            ))
+                        }
                     </ul>
                 </div>
-                <div>
-                    <h4 className='text-[#FFF] text-[20px] border-b border-[#FFF]'>Категории</h4>
-                    <ul className='text-[#FFF] text-[16px] list-disc ml-[20px] mt-[15px] flex flex-col gap-3 justify-center'>
-                        <li>бла бла</li>
-                        <li>бла бла</li>
-                        <li>бла бла</li>
-                        <li>бла бла</li>
-                        <li>бла бла</li>
-                    </ul>
+                <div className='w-[500px] h-[330px]'>
+                    <TransformWrapper>
+                        <TransformComponent>
+                            <Image className='w-full h-full object-cover' width={2500} height={2500} src={Maps} alt={'map'} />
+                        </TransformComponent>
+                    </TransformWrapper>
                 </div>
             </div>
 

@@ -1,11 +1,17 @@
 import React from 'react';
+import Certificate from "@/components/Certificate/Certificate";
+import {CertificatesApi} from "@/services/certificates/api";
+import {Metadata} from "next";
 
-const CertificatePage = () => {
+export const metadata: Metadata = { title: 'Сертификаты' }
+
+export default async function CertificatePage(){
+
+    const certificate = await CertificatesApi.getAll();
+
     return (
         <div>
-            CertificatePage
+            <Certificate certificate={certificate.data}/>
         </div>
     );
 };
-
-export default CertificatePage;

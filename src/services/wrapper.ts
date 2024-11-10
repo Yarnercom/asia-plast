@@ -76,4 +76,4 @@ class FetchWrapper {
   }
 }
 
-export const fetchWrapper = new FetchWrapper(baseUrl)
+export const fetchWrapper = new FetchWrapper(baseUrl || "")

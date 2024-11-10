@@ -1,46 +1,49 @@
-"use client";
+"use client"
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Partners as PartnersType } from "@/services/partners/entity";
 import './Partners.css';
-import Image from "next/image";
+import ImageComponent from '@/components/ui/ImageComponent';
+import { motion } from "framer-motion";
 
 interface PartnersInternalProps {
     partners: PartnersType | null;
 }
 
 const PartnersInternal: React.FC<PartnersInternalProps> = ({ partners }) => {
-    const [isImageBroken, setIsImageBroken] = useState(false);
+
+    const blockAnimation = {
+        hidden: {
+            opacity: 0,
+            x: 100
+        },
+        visible: (custom: number) => ({
+            opacity: 1,
+            x: 0,
+            transition: {
+                delay: custom * 0.2
+            }
+        })
+    };
 
     if (!partners) {
         return <p>Партнер не найден.</p>;
     }
 
-    const defaultImage = 'https://cdn.prod.website-files.com/62d84e447b4f9e7263d31e94/6399a4d27711a5ad2c9bf5cd_ben-sweet-2LowviVHZ-E-unsplash-1.jpeg';
-
-    const isBase64 = partners.logoImage && partners.logoImage.startsWith('data:image');
-
-    const handleImageError = () => {
-        setIsImageBroken(true);
-    };
-
-    const imageSrc = isImageBroken || !partners.logoImage ? defaultImage : partners.logoImage;
-
     return (
-        <div className="clearfix">
+        <motion.div initial="hidden" viewport={{ once: true }} custom={1} whileInView="visible" variants={blockAnimation} className="">
             <div className="float-left w-[120px] h-[120px] mr-4 mb-2">
-                <Image
-                    className="object-cover w-full h-full"
+                <ImageComponent
+                    src={partners.logoImage ? `data:image/${partners.logoImageType};base64, ${partners.logoImage}` : ''}
+                    alt={partners.logoImageName}
                     width={120}
                     height={120}
-                    src={isBase64 ? partners.logoImage : imageSrc}
-                    alt={partners.logoImageName}
-                    onError={handleImageError}
+                    className="object-cover w-full h-full"
                 />
             </div>
             <h1 className="text-2xl font-bold">{partners.name}</h1>
             <p className="text-gray-600">{partners.description}</p>
-        </div>
+        </motion.div>
     );
 };
 

@@ -9,24 +9,18 @@ import {
 } from "@/services/products/schemes"
 import type { CustomResponse } from "@/services/types"
 import axios from "axios"
+import { fetchWrapper } from "@/services/wrapper"
+import type {Category} from "@/services/categories/entity";
 
 export class ProductsApi {
   static async getBySubcategoryProducts(body: ProductsBySubcategoryGetRequest) {
-    const {
-      data: { data },
-    } = await axios.get<CustomResponse<ProductsBySubcategoryResponse>>("/product/subcategory", {
-      params: ProductsBySubcategoryGetSchema.cast(body),
+    return await fetchWrapper.get<CustomResponse<ProductsBySubcategoryResponse>>(`/product/subcategory?subcategoryId=${body.subcategoryId}&page=${body.page}&size=${body.size}`, {
+    cache: "no-store"
     })
-
-    return data
   }
 
   static async get(productId: number) {
-    const {
-      data: { data },
-    } = await axios.get<CustomResponse<Product>>(`/product?productId=${productId}`)
-
-    return data
+    return await fetchWrapper.get<CustomResponse<Category>>(`/product?productId=${productId}`, { cache: "no-store" })
   }
 
   static async create(body: ProductCreateRequest) {

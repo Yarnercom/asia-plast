@@ -8,6 +8,15 @@ const nextConfig = {
       },
     ]
   },
-}
+  images: {
+    domains: [
+      'example.com',
+      'www.hubspot.com',
+      'gratisography.com',
+      'cdn.prod.website-files.com',
+      'marketplace.canva.com'
+    ],
+  },
+};
 
 export default nextConfig
