@@ -1,3 +1,5 @@
+"use client"
+
 import React from 'react';
 import Image from "next/image";
 import img1 from '@/assets/imageForAboutUs/1.jpg'
@@ -6,8 +8,23 @@ import img3 from '@/assets/imageForAboutUs/3.jpg'
 import img4 from '@/assets/imageForAboutUs/4.png'
 import img5 from '@/assets/imageForAboutUs/5.jpg'
 import TitleInternalComponents from "@/components/TitleInternalComponents/TitleInternalComponents";
+import {motion} from "framer-motion";
 
 const About = () => {
+
+    const blockAnimation = {
+        hidden: {
+            opacity: 0,
+            x: 100
+        },
+        visible: (custom: number) => ({
+            opacity: 1,
+            x: 0,
+            transition: {
+                delay: custom * 0.1
+            }
+        })
+    };
 
     const blocks = [
         {
@@ -44,14 +61,16 @@ const About = () => {
 
     return (
         <div className='container mx-auto px-4 py-8'>
-            <TitleInternalComponents title={'О компании «АзияПласт»'}/>
+            <motion.div custom={1} variants={blockAnimation} viewport={{ once: true }} initial="hidden" whileInView="visible">
+                <TitleInternalComponents title={'О компании «АзияПласт»'}/>
+            </motion.div>
 
-            <p className='text-lg leading-relaxed mb-12 text-center max-w-3xl mx-auto'>
+            <motion.p variants={blockAnimation} custom={1} viewport={{ once: true }} initial="hidden" whileInView="visible" className='text-lg leading-relaxed mb-12 text-center max-w-3xl mx-auto'>
                 ТМ «АзияПЛАСТ», являющаяся одним из подразделений компании «Профикс-Юг», производит и реализует изделия из термопластичных полимеров. Ассортимент продукции заинтересует производителей различного направления.
-            </p>
+            </motion.p>
 
             {blocks.map((block, index) => (
-                <div key={index} className="bg-white p-6 mb-8 rounded-lg shadow-md">
+                <motion.div variants={blockAnimation} custom={index + 2} viewport={{ once: true }} initial="hidden" whileInView="visible" key={index} className="bg-white p-6 mb-8 rounded-lg shadow-md">
                     <div className="flex flex-col md:flex-row items-center">
                         <Image
                             width={300}
@@ -66,7 +85,7 @@ const About = () => {
                             {block.details && <p className="text-gray-700 leading-relaxed">{block.details}</p>}
                         </div>
                     </div>
-                </div>
+                </motion.div>
             ))}
         </div>
     );

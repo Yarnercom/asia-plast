@@ -1,12 +1,25 @@
 import React from 'react';
 import { Partners as PartnersType } from "@/services/partners/entity";
-import {PartnersApi} from "@/services/partners/api";
+import { PartnersApi } from "@/services/partners/api";
 import PartnersInternal from "@/components/Partner/PartnersInternal";
+import { Metadata } from "next";
 
 interface PartnersIdPageProps {
     params: {
         id: string;
     };
+}
+
+export async function generateMetadata({ params }: PartnersIdPageProps): Promise<Metadata> {
+    const id = parseInt(params.id);
+    if (isNaN(id)) {
+        return { title: 'Неверный формат ID' };
+    }
+
+    const response = await PartnersApi.get(id);
+    const partnerName = response.data?.name || 'Партнер';
+
+    return { title: `Партнеры - ${partnerName}` };
 }
 
 export default async function PartnersIdPage({ params }: PartnersIdPageProps) {

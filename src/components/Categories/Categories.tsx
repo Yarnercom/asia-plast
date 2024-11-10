@@ -6,8 +6,9 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import Loader from "@/components/Loader/Loader";
 import { IconCategory } from "@tabler/icons-react";
-import Image from "next/image";
 import './CategoryPageProps.css'
+import ImageComponent from "@/components/ui/ImageComponent";
+import { motion } from "framer-motion";
 
 interface CategoriesProps {
     categories: Category[] | null;
@@ -28,6 +29,35 @@ interface Category {
 }
 
 const Categories: React.FC<CategoriesProps> = ({ categories }) => {
+
+    const blockAnimation = {
+        hidden: {
+            opacity: 0,
+            y: 100
+        },
+        visible: (custom: number) => ({
+            opacity: 1,
+            y: 0,
+            transition: {
+                delay: custom * 0.2
+            }
+        })
+    };
+
+    const blockSubcategoriesAnimation = {
+        hidden: {
+            opacity: 0,
+            scale: 0
+        },
+        visible: (custom: number) => ({
+            opacity: 1,
+            scale: 1,
+            transition: {
+                delay: custom * 0.2
+            }
+        })
+    };
+
     const searchParams = useSearchParams();
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
     const [isHovered, setIsHovered] = useState(false);
@@ -46,8 +76,10 @@ const Categories: React.FC<CategoriesProps> = ({ categories }) => {
     }
 
     return (
-        <section className="container m-auto mb-[60px]">
-            <Toolbar title="Категории" link="/main/categories" />
+        <motion.section initial="hidden" whileInView="visible" variants={blockAnimation} className="container m-auto mb-[60px]">
+            <motion.div custom={2} variants={blockAnimation}>
+                <Toolbar title="Категории" link="/main/categories" />
+            </motion.div>
 
             <div className="flex flex-wrap gap-4">
                 {categories.map((category, index) => {
@@ -64,8 +96,14 @@ const Categories: React.FC<CategoriesProps> = ({ categories }) => {
                             onMouseLeave={() => setIsHovered(false)}
                         >
                             <div className='rounded-lg overflow-hidden border border-1'>
-                                <Link href={`/main/${category.id}`}>
-                                    <Image width={550} height={550} className='w-[250px]' src={'https://cdn.prod.website-files.com/62d84e447b4f9e7263d31e94/6399a4d27711a5ad2c9bf5cd_ben-sweet-2LowviVHZ-E-unsplash-1.jpeg'} alt={'/'} />
+                                <Link href={`/main/categories`}>
+                                    <ImageComponent
+                                        src={category.categoryImage ? `data:image/${category.imageType};base64, ${category.categoryImage}` : ''}
+                                        alt={category.categoryImageName || ''}
+                                        width={1000}
+                                        height={1000}
+                                        className="w-[250px] object-cover"
+                                    />
                                     <div
                                         className={`bg-white py-2 shadow-lg hover:cursor-pointer flex justify-center items-center gap-4 px-4 transition-all duration-300 ease-in-out 
                             ${isActive ? "bg-[#008ECC] text-white shadow-lg transform hover:scale-105" : "text-gray-800 bg-[#F3F9FB] hover:bg-[#E2F3F7] hover:text-[#008ECC] hover:shadow-md"}`}
@@ -77,29 +115,33 @@ const Categories: React.FC<CategoriesProps> = ({ categories }) => {
                             </div>
 
                             {activeIndex === index && category.subcategories.length > 0 && (
-                                <div
+                                <motion.div
+                                    initial="hidden"
+                                    animate="visible"
+                                    variants={blockSubcategoriesAnimation}
                                     className="absolute z-10 left-0 right-0 mt-2 bg-white border border-gray-200 rounded-md shadow-lg opacity-100 transition-opacity duration-300 min-w-max"
                                 >
                                     <ul className="p-4 flex flex-col gap-2">
                                         {category.subcategories.map((subcategory) => (
                                             <li key={subcategory.id} className="py-1">
                                                 <Link
-                                                    href={`/main/${category.id}/${subcategory.id}`}
-                                                    className="text-sm text-[#222] font-normal whitespace-nowrap hover:text-[#008ECC]"
+                                                    href={`/main/categories/${subcategory.id}`}
+                                                    className="text-sm text-[#222] font-normal whitespace-nowrap px-[10px] py-[5px] w-full hover:text-[#008ECC]"
                                                 >
                                                     {subcategory.name}
                                                 </Link>
+                                                <hr/>
                                             </li>
                                         ))}
                                     </ul>
-                                </div>
+                                </motion.div>
                             )}
                         </div>
                     );
                 })}
             </div>
 
-        </section>
+        </motion.section>
     );
 };
 

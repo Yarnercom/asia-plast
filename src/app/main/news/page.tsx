@@ -1,5 +1,8 @@
 import News from "@/components/News/News";
 import {NewsApi} from "@/services/news/api";
+import {Metadata} from "next";
+
+export const metadata: Metadata = { title: 'Новости' }
 
 export default async function NewsPage()  {
 

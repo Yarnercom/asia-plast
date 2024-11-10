@@ -1,10 +1,15 @@
+import {Metadata} from "next";
+import Contact from "@/components/Contacts/Contacts";
 
-const Contact = () => {
+export const metadata: Metadata = { title: 'Контакты' }
+
+const ContactPage = () => {
+
     return (
         <div>
-            contact
+            <Contact/>
         </div>
     );
 };
 
-export default Contact;
+export default ContactPage;

@@ -5,6 +5,9 @@ import Link from "next/link";
 import { cn } from "@/utils/cn";
 import { useState, useRef } from "react";
 import './Header.css';
+import { IconWindowMaximize } from "@tabler/icons-react";
+import { motion } from "framer-motion";
+import {Burger} from "@/components/Header/BurgerMenu/Burger";
 
 interface Category {
     id: number;
@@ -24,10 +27,23 @@ interface SubSubcategory {
 }
 
 const NavBar = ({ category }: { category: Category[] }) => {
+
+    const blockAnimation = {
+        hidden: {
+            opacity: 0,
+            y: 100
+        },
+        visible: (custom: number) => ({
+            opacity: 1,
+            y: 0,
+            transition: {
+                delay: custom * 0.2
+            }
+        })
+    };
+
     const pathname = usePathname();
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
-    const [hoveredCategory, setHoveredCategory] = useState<number | null>(null);
-    const [hoveredSubCategory, setHoveredSubCategory] = useState<number | null>(null);
 
     const closeMenuTimeout = useRef<number | null>(null);
 
@@ -41,126 +57,82 @@ const NavBar = ({ category }: { category: Category[] }) => {
     const handleMouseLeave = () => {
         closeMenuTimeout.current = window.setTimeout(() => {
             setActiveIndex(null);
-            setHoveredCategory(null);
-            setHoveredSubCategory(null);
         }, 500);
     };
 
-    const handleCategoryMouseEnter = (catId: number) => {
-        if (closeMenuTimeout.current !== null) {
-            clearTimeout(closeMenuTimeout.current as number);
-        }
-        setHoveredCategory(catId);
-    };
-
-    const handleSubCategoryMouseEnter = (subCatId: number) => {
-        if (closeMenuTimeout.current !== null) {
-            clearTimeout(closeMenuTimeout.current as number);
-        }
-        setHoveredSubCategory(subCatId);
-    };
-
     const navItems = [
-        { title: "Главная", path: "/main" },
-        { title: "О компании", path: "/main/about" },
-        { title: "Новости", path: "/main/news" },
-        { title: "Доставка", path: "/main/delivery" },
-        { title: "Вакансии", path: "/main/vacancy" },
-        { title: "Каталог", path: "/main/categories" },
-        { title: "Партнеры", path: "/main/partners" },
+        {title: "Главная", path: "/main"},
+        {title: "О компании", path: "/main/about"},
+        {title: "Новости", path: "/main/news"},
+        {title: "Доставка", path: "/main/delivery"},
+        {title: "Вакансии", path: "/main/vacancy"},
+        {title: "Каталог", path: "/main/categories"},
+        {title: "Партнеры", path: "/main/partners"},
     ];
 
+
     return (
-        <div className="relative">
-            <div className="flex-wrap items-center flex gap-[10px] group relative">
-                {navItems.map((item, index) => (
-                    <div
-                        key={item.path}
-                        className="relative"
-                        onMouseEnter={() => handleMouseEnter(index)}
-                        onMouseLeave={handleMouseLeave}
-                    >
-                        <Link href={item.path}>
-                            <div
-                                className={cn(
-                                    `whitespace-nowrap hover:text-[#008ECC] text-sm rounded-[18px] py-[9px] px-[14px] transition-colors duration-200`,
-                                    pathname === item.path ? "text-[#FFF] bg-[#008ECC]" : "text-[#222222] bg-[#F3F9FB]"
-                                )}
+        <div className="relative w-full md:hidden sm:hidden lg:block xl:block 2xl:block">
+
+            <nav className="nav-menu">
+                <div className="wrapper">
+                    {navItems.map((item, index) => (
+                        <ul key={item.path} className="nav-links">
+                            <li
+                                className="has-mega"
+                                onMouseEnter={() => handleMouseEnter(index)}
+                                onMouseLeave={handleMouseLeave}
                             >
-                                {item.title}
-                            </div>
-                        </Link>
-                    </div>
-                ))}
-
-                {activeIndex !== null && navItems[activeIndex].title === "Каталог" && (
-                    <div
-                        className="absolute left-0 top-full bg-white shadow-lg py-[10px] z-10 w-full rounded-b-[10px] transition-opacity duration-200"
-                        onMouseEnter={() => handleMouseEnter(activeIndex)}
-                        onMouseLeave={handleMouseLeave}
-                    >
-                        <div className="max-w-screen-xl mx-auto flex gap-[10px] py-[10px] px-[20px]">
-                            {category.map((cat) => (
-                                <div
-                                    key={cat.id}
-                                    className="relative"
-                                    onMouseEnter={() => handleCategoryMouseEnter(cat.id)}
-                                    onMouseLeave={handleMouseLeave}
-                                >
-                                    <Link
-                                        href={`/main/${cat.id}`}
-                                        className="text-sm text-[#222] font-medium whitespace-nowrap hover:text-[#008ECC]"
-                                    >
-                                        {cat.name}
-                                    </Link>
-
-                                    {hoveredCategory === cat.id && cat.subcategories && (
+                                <div className='nav-links-title'>
+                                    <Link href={item.path}>
                                         <div
-                                            className="absolute left-0 top-full mt-2 bg-white shadow-lg py-[10px] px-[10px] rounded-md w-[200px] transition-opacity duration-200"
-                                            onMouseEnter={() => handleCategoryMouseEnter(cat.id)}
-                                            onMouseLeave={handleMouseLeave}
+                                            className={cn(
+                                                `whitespace-nowrap hover:text-[#000] text-sm rounded-[18px] py-[9px] px-[14px] transition-colors duration-200`,
+                                                pathname === item.path ? "text-[#FFF] bg-[#008ECC]" : "text-[#222222] bg-[#F3F9FB] hover:bg-[#008ECC60]"
+                                            )}
                                         >
-                                            {cat.subcategories.map((subCat) => (
-                                                <div
-                                                    key={subCat.id}
-                                                    className="relative"
-                                                    onMouseEnter={() => handleSubCategoryMouseEnter(subCat.id)}
-                                                    onMouseLeave={handleMouseLeave}
-                                                >
-                                                    <Link
-                                                        href={`/main/categories/${cat.id}/${subCat.id}`}
-                                                        className="block text-sm text-[#555] font-normal whitespace-nowrap hover:text-[#008ECC] py-[5px]"
-                                                    >
-                                                        {subCat.name}
-                                                    </Link>
+                                            {item.title}
+                                        </div>
+                                    </Link>
+                                </div>
 
-                                                    {hoveredSubCategory === subCat.id && subCat.subSubcategories && (
-                                                        <div
-                                                            className="absolute left-0 top-full mt-2 bg-white shadow-lg py-[10px] px-[10px] rounded-md w-[200px] transition-opacity duration-200"
-                                                            onMouseEnter={() => handleSubCategoryMouseEnter(subCat.id)}
-                                                            onMouseLeave={handleMouseLeave}
-                                                        >
-                                                            {subCat.subSubcategories.map((subSubCat) => (
-                                                                <Link
-                                                                    href={`/main/categories/${cat.id}/${subCat.id}/${subSubCat.id}`}
-                                                                    key={subSubCat.id}
-                                                                    className="block text-sm text-[#555] font-normal whitespace-nowrap hover:text-[#008ECC] py-[5px]"
-                                                                >
-                                                                    {subSubCat.name}
-                                                                </Link>
-                                                            ))}
-                                                        </div>
-                                                    )}
+                                {activeIndex !== null && navItems[activeIndex].title === "Каталог" && (
+                                    <div className="mega-box">
+                                        <div className="content">
+                                            {category.map((cat) => (
+                                                <div key={cat.id} className="main">
+                                                    <div className='main_item'>
+                                                        <Link className='flex items-center gap-4'
+                                                              href={`/main/categories`}>
+                                                            <p>{cat.name}</p>
+                                                            <IconWindowMaximize size={20} color={'#008ECC'}/>
+                                                        </Link>
+                                                    </div>
+                                                    <motion.ul variants={blockAnimation} custom={1}
+                                                               initial="hidden" viewport={{once: true}}
+                                                               whileInView="visible" className="mega-links">
+                                                        {cat.subcategories?.map((subCat) => (
+                                                            <li key={subCat.id}>
+                                                                <div className='mega-links-name'>
+                                                                    <Link
+                                                                        href={`/main/categories/${subCat.id}`}>
+                                                                        {subCat.name}
+                                                                    </Link>
+                                                                </div>
+                                                            </li>
+                                                        ))}
+                                                    </motion.ul>
                                                 </div>
                                             ))}
                                         </div>
-                                    )}
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                )}
-            </div>
+                                    </div>
+                                )}
+                            </li>
+                        </ul>
+                    ))}
+                </div>
+            </nav>
+
         </div>
     );
 };

@@ -7,6 +7,7 @@ import Link from "next/link";
 import Toolbar from "@/components/Toolbar/Toolbar";
 import TitleInternalComponents from "@/components/TitleInternalComponents/TitleInternalComponents";
 import {usePathname} from "next/navigation";
+import { motion } from "framer-motion";
 
 interface VacancyData {
     id: number;
@@ -21,13 +22,27 @@ interface VacancyProps {
 
 const VacancyList: React.FC<VacancyProps> = ({ vacancy }) => {
 
+    const blockAnimation = {
+        hidden: {
+            opacity: 0,
+            y: 100
+        },
+        visible: (custom: number) => ({
+            opacity: 1,
+            y: 0,
+            transition: {
+                delay: custom * 0.2
+            }
+        })
+    };
+
     if (!vacancy || vacancy.length === 0) {
         return <Loader />;
     }
     const pathname = usePathname();
 
     return (
-        <div className='container mx-auto'>
+        <motion.div className='container mx-auto' initial="hidden" whileInView="visible" variants={blockAnimation}>
 
             {pathname === '/main' ? (
                 <Toolbar title={'Вакансии'} link={'/main/vacancy'} />
@@ -53,7 +68,7 @@ const VacancyList: React.FC<VacancyProps> = ({ vacancy }) => {
                     </div>
                 ))}
             </div>
-        </div>
+        </motion.div>
     );
 };
 

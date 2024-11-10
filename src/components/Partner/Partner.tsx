@@ -2,12 +2,13 @@
 
 import React from 'react';
 import Loader from "@/components/Loader/Loader";
-import Image from "next/image";
 import Link from "next/link";
 import Toolbar from "@/components/Toolbar/Toolbar";
 import TitleInternalComponents from "@/components/TitleInternalComponents/TitleInternalComponents";
 import {usePathname} from "next/navigation";
 import './Partners.css'
+import ImageComponent from "@/components/ui/ImageComponent";
+import { motion } from "framer-motion";
 
 interface PartnerData {
     id: number;
@@ -29,6 +30,21 @@ interface PartnerProps {
 }
 
 const Partner: React.FC<PartnerProps> = ({ partner }) => {
+
+    const blockAnimation = {
+        hidden: {
+            opacity: 0,
+            y: 100
+        },
+        visible: (custom: number) => ({
+            opacity: 1,
+            y: 0,
+            transition: {
+                delay: custom * 0.2
+            }
+        })
+    };
+
     if (!partner || partner.length === 0) {
         return <Loader />;
     }
@@ -36,7 +52,7 @@ const Partner: React.FC<PartnerProps> = ({ partner }) => {
     const pathname = usePathname();
 
     return (
-        <section className='container m-auto mb-[60px]'>
+        <motion.section initial="hidden" whileInView="visible" variants={blockAnimation} viewport={ { amount: 0.2 }} className='container m-auto mb-[60px]'>
 
             {pathname === '/main' ? (
                 <Toolbar title={'Партнеры'} link={'/main/partners'} />
@@ -46,7 +62,15 @@ const Partner: React.FC<PartnerProps> = ({ partner }) => {
 
                 {partner && partner.map((part) => (
                     <Link href={`/main/partners/${part.id}`} key={part.id} className="card 1">
-                        <div className="card_image"> <Image className='object-cover' width={800} height={650} src={part?.logoImage ? 'https://www.hubspot.com/hs-fs/hubfs/Starbucks_Corporation_Logo_2011.svg.png?width=400&height=405&name=Starbucks_Corporation_Logo_2011.svg.png' : ''} alt={'/'} /> </div>
+                        <div className="card_image">
+                            <ImageComponent
+                                src={part.logoImage ? `data:image/png;base64, ${part.logoImage}` : ''}
+                                alt={part.logoImageName || 'Партнерское лого'}
+                                width={120}
+                                height={120}
+                                className="object-cover"
+                            />
+                        </div>
                         <div className="card_title title-white">
                             <p>{part.name}</p>
                         </div>
@@ -55,7 +79,7 @@ const Partner: React.FC<PartnerProps> = ({ partner }) => {
 
             </div>
 
-        </section>
+        </motion.section>
     );
 };
 
