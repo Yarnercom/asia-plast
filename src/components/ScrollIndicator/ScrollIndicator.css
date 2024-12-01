@@ -6,9 +6,9 @@
     position: fixed;
     top: 0;
     left: 0;
-    right: 0;
-    height: 4px;
-    z-index: 50;
-    background: var(--red);
-    transform-origin: 0%;
+    height: 2px;
+    background-color: #3498db;
+    width: 100%;
+    transform-origin: left center;
+    z-index: 9999;
 }

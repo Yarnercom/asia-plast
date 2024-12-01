@@ -102,6 +102,12 @@ const CartModal: React.FC<ModalProps> = ({ trigger }) => {
         localStorage.setItem('cart', JSON.stringify(updatedCart));
     };
 
+    const handleClearCart = () => {
+        clearCart();
+        setCartItems([]);
+        localStorage.removeItem('cart');
+    };
+
     return (
         <div className='container mx-auto'>
             <div onClick={openModal}>
@@ -132,7 +138,7 @@ const CartModal: React.FC<ModalProps> = ({ trigger }) => {
                                         <li key={item.id} className="flex justify-between items-center py-2 border-b">
                                             <div className="flex items-center space-x-4">
                                                 <div className="rounded-lg overflow-hidden">
-                                                    {item.images?.map((image: any) => (
+                                                    {item.images.slice(0, 1)?.map((image: any) => (
                                                         <ImageComponent
                                                             key={image.id}
                                                             src={image.productImage ? `data:image/${image.productImageType};base64, ${image.productImage}` : ""}
@@ -143,33 +149,36 @@ const CartModal: React.FC<ModalProps> = ({ trigger }) => {
                                                         />
                                                     ))}
                                                 </div>
-                                                <div className='flex flex-col gap-2'>
-                                                    <span className="font-medium">{item.name}</span>
-                                                    <span className='text-gray-500'>Артикул: {item.article}</span>
-                                                </div>
-                                            </div>
+                                                <div className='flex items-center gap-4 md:flex-row flex-col'>
+                                                    <div className='flex flex-col gap-2'>
+                                                        <span className="font-medium">{item.name}</span>
+                                                        <span className='text-gray-500'>Артикул: {item.article}</span>
+                                                    </div>
 
-                                            <div className="flex items-center space-x-2">
-                                                <button
-                                                    onClick={() => handleDecreaseQuantity(item.id)}
-                                                    className="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded"
-                                                >
-                                                    -
-                                                </button>
-                                                <span>{item.quantity}</span>
-                                                <button
-                                                    onClick={() => handleIncreaseQuantity(item.id)}
-                                                    className="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded"
-                                                >
-                                                    +
-                                                </button>
+                                                    <div className="flex items-center space-x-2">
+                                                        <button
+                                                            onClick={() => handleDecreaseQuantity(item.id)}
+                                                            className="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded"
+                                                        >
+                                                            -
+                                                        </button>
+                                                        <span>{item.quantity}</span>
+                                                        <button
+                                                            onClick={() => handleIncreaseQuantity(item.id)}
+                                                            className="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded"
+                                                        >
+                                                            +
+                                                        </button>
+                                                    </div>
+                                                </div>
+
                                             </div>
 
                                             <button
                                                 onClick={() => handleRemoveItem(item.id)}
                                                 className="text-red-500 hover:text-red-700 ml-4"
                                             >
-                                                <IconSquareRoundedX size={20} />
+                                                <IconSquareRoundedX size={20}/>
                                             </button>
                                         </li>
                                     ))}
@@ -182,7 +191,7 @@ const CartModal: React.FC<ModalProps> = ({ trigger }) => {
 
                                 <div className="flex gap-4 mt-6">
                                     <button
-                                        onClick={clearCart}
+                                        onClick={handleClearCart}
                                         className="flex-1 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
                                     >
                                         Очистить
