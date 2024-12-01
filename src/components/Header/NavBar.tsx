@@ -7,7 +7,6 @@ import { useState, useRef } from "react";
 import './Header.css';
 import { IconWindowMaximize } from "@tabler/icons-react";
 import { motion } from "framer-motion";
-import {Burger} from "@/components/Header/BurgerMenu/Burger";
 
 interface Category {
     id: number;
@@ -72,9 +71,9 @@ const NavBar = ({ category }: { category: Category[] }) => {
 
 
     return (
-        <div className="relative w-full md:hidden sm:hidden lg:block xl:block 2xl:block">
+        <div className="relative w-full">
 
-            <nav className="nav-menu">
+            <nav className="nav-menu sm:hidden md:hidden lg:hidden xl:block 2xl:block">
                 <div className="wrapper">
                     {navItems.map((item, index) => (
                         <ul key={item.path} className="nav-links">
@@ -87,7 +86,7 @@ const NavBar = ({ category }: { category: Category[] }) => {
                                     <Link href={item.path}>
                                         <div
                                             className={cn(
-                                                `whitespace-nowrap hover:text-[#000] text-sm rounded-[18px] py-[9px] px-[14px] transition-colors duration-200`,
+                                                `whitespace-nowrap hover:text-[#000] text-[14px] rounded-[18px] py-[9px] px-[14px] transition-colors duration-200`,
                                                 pathname === item.path ? "text-[#FFF] bg-[#008ECC]" : "text-[#222222] bg-[#F3F9FB] hover:bg-[#008ECC60]"
                                             )}
                                         >
@@ -102,16 +101,16 @@ const NavBar = ({ category }: { category: Category[] }) => {
                                             {category.map((cat) => (
                                                 <div key={cat.id} className="main">
                                                     <div className='main_item'>
-                                                        <Link className='flex items-center gap-4'
+                                                        <Link className='flex items-center justify-start gap-2'
                                                               href={`/main/categories`}>
-                                                            <p>{cat.name}</p>
+                                                            <p className='text-[14px]'>{cat.name}</p>
                                                             <IconWindowMaximize size={20} color={'#008ECC'}/>
                                                         </Link>
                                                     </div>
                                                     <motion.ul variants={blockAnimation} custom={1}
                                                                initial="hidden" viewport={{once: true}}
                                                                whileInView="visible" className="mega-links">
-                                                        {cat.subcategories?.map((subCat) => (
+                                                        {cat.subcategories?.slice(0, 5).map((subCat) => (
                                                             <li key={subCat.id}>
                                                                 <div className='mega-links-name'>
                                                                     <Link
@@ -121,6 +120,14 @@ const NavBar = ({ category }: { category: Category[] }) => {
                                                                 </div>
                                                             </li>
                                                         ))}
+                                                        <li>
+                                                            <Link
+                                                                href={`/main/categories`}>
+                                                                <div className='mega-links-name'>
+                                                                    <p>Все</p>
+                                                                </div>
+                                                            </Link>
+                                                        </li>
                                                     </motion.ul>
                                                 </div>
                                             ))}

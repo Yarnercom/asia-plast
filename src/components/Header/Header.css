@@ -108,22 +108,8 @@
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+@media (max-width: 650px) {
+    .nav-menu {
+        display: none;
+    }
+}

@@ -1,9 +1,9 @@
 "use client"
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Product as ProductsType } from "@/services/products/entity";
 import ImageComponent from "@/components/ui/ImageComponent";
-import {useCart} from "@/utils/context/CartContext";
+import { useCart } from "@/utils/context/CartContext";
 import { motion } from "framer-motion";
 
 interface ProductInternalProps {
@@ -11,6 +11,7 @@ interface ProductInternalProps {
 }
 
 const ProductInternal: React.FC<ProductInternalProps> = ({ product }) => {
+    const [selectedImage, setSelectedImage] = useState(product?.images[0] || null);
 
     const blockAnimation = {
         hidden: {
@@ -38,6 +39,10 @@ const ProductInternal: React.FC<ProductInternalProps> = ({ product }) => {
         });
     };
 
+    const handleColorClick = (image: any) => {
+        setSelectedImage(image); // Обновляем выбранное изображение при клике
+    };
+
     if (!product) {
         return <p className="text-center text-xl text-red-600">Продукт не найден.</p>;
     }
@@ -46,19 +51,17 @@ const ProductInternal: React.FC<ProductInternalProps> = ({ product }) => {
         <motion.section initial="hidden" whileInView="visible" variants={blockAnimation} className="container mx-auto">
             <div className="flex flex-wrap md:flex-nowrap items-start gap-8">
                 <div className="w-full md:w-[35%] bg-gray-100 p-4 rounded-lg shadow-lg">
-                    {product.images && product.images.length > 0 && (
+                    {selectedImage && (
                         <div className="grid grid-cols-1 gap-4">
-                            {product.images.map((image: any) => (
-                                <div key={image.id} className="w-full">
-                                    <ImageComponent
-                                        src={image.productImage ? `data:image/${image.productImageType};base64, ${image.productImage}` : ''}
-                                        alt={image.productImageName}
-                                        width={600}
-                                        height={600}
-                                        className="object-cover w-full h-full rounded-lg shadow-md transition-transform duration-300 ease-in-out transform hover:scale-105"
-                                    />
-                                </div>
-                            ))}
+                            <div className="w-full">
+                                <ImageComponent
+                                    src={selectedImage.productImage ? `data:image/${selectedImage.productImageType};base64, ${selectedImage.productImage}` : ''}
+                                    alt={selectedImage.productImage}
+                                    width={600}
+                                    height={600}
+                                    className="object-cover w-full h-full rounded-lg shadow-md transition-transform duration-300 ease-in-out transform hover:scale-105"
+                                />
+                            </div>
                         </div>
                     )}
                 </div>
@@ -92,14 +95,15 @@ const ProductInternal: React.FC<ProductInternalProps> = ({ product }) => {
                                 <p>{image.color?.name}</p>
                                 <div
                                     className={`w-[50px] h-[50px] rounded-lg transition-all ${
-                                        image.isSelected ? 'border-4 border-white' : ''
+                                        selectedImage === image ? 'border-4 border-white' : ''
                                     }`}
                                     style={{
                                         backgroundColor: image.color?.hexCode,
-                                        boxShadow: image.isSelect
+                                        boxShadow: selectedImage === image
                                             ? '0px 5px 15px rgba(0, 0, 255, 0.5), 0px 10px 20px rgba(0, 0, 0, 0.15)'
                                             : '0px 5px 10px rgba(0, 0, 0, 0.15)',
                                     }}
+                                    onClick={() => handleColorClick(image)} // При клике обновляем выбранную картинку
                                 ></div>
                             </div>
                         ))}

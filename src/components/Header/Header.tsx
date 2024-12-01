@@ -3,10 +3,11 @@ import HeaderTop from "@/components/Header/HeaderTop";
 import CartModal from "@/components/cart/CartModal";
 import {IconShoppingCart} from '@tabler/icons-react';
 import './Header.css';
-import {Burger} from "@/components/Header/BurgerMenu/Burger";
 import NavBar from "@/components/Header/NavBar";
 import {CategoriesApi} from "@/services/categories/api";
-import ScrollIndicator from "@/components/ScrollIndicator/ScrollIndicator";
+import BurgerMenu from "@/components/Header/BurgerMenu/BurgerMenu";
+import Link from "next/link";
+import LoadingBar from "@/components/ScrollIndicator/ScrollIndicator";
 
 export default async function Header() {
 
@@ -17,17 +18,18 @@ export default async function Header() {
             <HeaderTop/>
             <div className="mx-[30px] relative">
                 <div className="container mx-auto">
-                    <div className='flex items-center justify-between'>
-                        <div className="flex items-center">
-                            <h1 className="text-[#008ECC] leading-[20px] text-[32px] drop-shadow-lg">АзияПласт</h1>
+                    <div className='flex items-center justify-between h-[60px]'>
+                        <div className="flex items-center h-full">
+                            <h1 className="text-[#008ECC] leading-[20px] hidden sm:block text-[32px] drop-shadow-lg">
+                                <Link href={'/main'}>АзияПласт</Link>
+                            </h1>
                         </div>
-                        <div className='md:block sm:block lg:hidden xl:hidden 2xl:hidden'>
-                            <Burger/>
+                        <div className=''>
+                            <NavBar category={category.data as any}/>
                         </div>
 
-                        <NavBar category={category.data as any}/>
+                        <ul className="flex items-center gap-[20px] h-full">
 
-                        <ul className="flex items-center gap-[20px]">
                             <li className="flex items-center gap-[6px]">
                                 <CartModal
                                     trigger={
@@ -38,10 +40,14 @@ export default async function Header() {
                                     }
                                 />
                             </li>
+
+                            <div className='relative sm:block md:block lg:block xl:hidden 2xl:hidden'>
+                                <BurgerMenu/>
+                            </div>
                         </ul>
                     </div>
                 </div>
-                <ScrollIndicator/>
+                <LoadingBar/>
             </div>
         </header>
     );

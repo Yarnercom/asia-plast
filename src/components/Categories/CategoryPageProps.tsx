@@ -77,7 +77,7 @@ export default function CategoryPage({ categoriesList, subcategoriesList }: Cate
     return (
         <motion.section initial="hidden" whileInView="visible" variants={blockAnimation} className='container m-auto'>
 
-            <h1 className='text-[36px] text-center font-bold mb-[40px]'>Каталог пластиковых изделий</h1>
+            <h1 className=' text-[24px] md:text-[36px] text-center font-bold mb-[40px]'>Каталог пластиковых изделий</h1>
 
             <div className='flex items-center justify-center w-full'>
                 <div
@@ -89,13 +89,13 @@ export default function CategoryPage({ categoriesList, subcategoriesList }: Cate
                                     type="radio"
                                     name="tab"
                                     id={`tab${index + 1}`}
-                                    className="absolute w-[200px] h-full opacity-0"
+                                    className="absolute w-[100px] h-full opacity-0"
                                     checked={selectedTab === index}
                                     onChange={() => handleTabChange(index)}
                                     onClick={() => handleCategoryClick(category.id)}
                                 />
                                 <label
-                                    className={`relative z-[1] flex items-center justify-center w-full h-full text-[14px] cursor-pointer transition-all duration-200 ${
+                                    className={`relative z-[1] flex items-center justify-center w-full h-full text-[12px] text-center cursor-pointer transition-all duration-200 ${
                                         selectedTab === index ? 'text-white opacity-100' : 'text-black opacity-60'
                                     }`}
                                     htmlFor={`tab${index + 1}`}

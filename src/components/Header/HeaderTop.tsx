@@ -10,7 +10,7 @@ export default async function HeaderTop() {
             <div className='container m-auto flex items-center justify-between'>
                 <p className='text-[#666666]'>Приветствуем вас в АзияПласт!</p>
 
-                <ul className='flex items-center gap-[20px]'>
+                <ul className='items-center gap-[20px] hidden sm:flex'>
                     <li className=''>
                         <Link className='flex items-center gap-[6px] text-[#666666] cursor-pointer' href={'/main/delivery'}>
                             <Image width={18} height={18} src={Car} alt={'car'}/>
