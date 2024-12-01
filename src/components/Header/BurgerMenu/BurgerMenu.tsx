@@ -40,7 +40,7 @@ function BurgerMenu() {
         <>
             <button
                 onClick={toggleMenu}
-                className="p-2 bg-gray-800 text-white rounded-md z-50"
+                className="p-2 bg-[#008ECC] text-white rounded-md z-50"
             >
                 {isMenuOpen ? <IconX size={20} color={'#fff'}/> : <IconMenuDeep color={'#fff'} size={20}/>}
             </button>
@@ -54,7 +54,7 @@ function BurgerMenu() {
 
                     <button
                         onClick={toggleMenu}
-                        className="p-2 bg-gray-800 text-white rounded-md"
+                        className="p-2 bg-[#008ECC] text-white rounded-md"
                     >
                         <IconX size={20} color={'#fff'}/>
                     </button>

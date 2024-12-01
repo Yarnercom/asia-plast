@@ -71,7 +71,7 @@
 }
 
 .main {
-    width: 25%;
+    width: 80%;
 }
 
 .main .main_item {
@@ -82,12 +82,9 @@
 }
 
 .mega-links {
-    margin-left: -42px;
-    border-left: 1px solid #fff;
 }
 
 .mega-links li {
-    padding: 0 20px;
 }
 
 .mega-links li .mega-links-name {
