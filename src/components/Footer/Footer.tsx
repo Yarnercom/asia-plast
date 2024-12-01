@@ -2,10 +2,22 @@
 
 import React from 'react';
 import { IconBrandWhatsapp, IconPhone } from '@tabler/icons-react';
-import Image from 'next/image';
 import Link from 'next/link';
-import Maps from '@/assets/map/карта.png';
-import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
+
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import L from "leaflet";
+
+const defaultIcon = L.icon({
+    iconUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png",
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png",
+    shadowSize: [41, 41],
+});
+
+L.Marker.prototype.options.icon = defaultIcon;
 
 const Footer = () => {
     const links = [
@@ -17,6 +29,9 @@ const Footer = () => {
         { title: "Каталог", path: "/main/categories" },
         { title: "Партнеры", path: "/main/partners" },
     ];
+
+    const position1: [number, number] = [42.8854142727642, 74.59256359916779];
+    const position2: [number, number] = [42.86284108697292, 74.52016406152877];
 
     return (
         <footer className='w-full relative pt-[96px] px-[30px] md:px-[127px] bg-[#008ECC] overflow-hidden mt-[50px]'>
@@ -48,20 +63,27 @@ const Footer = () => {
                             {
                                 links.map((link, idx) => (
                                     <li key={idx} className='border-1 hover:border-b-white'>
-                                        <Link href={link.path}>{link.title}</Link>
+                                        <Link className='whitespace-nowrap' href={link.path}>{link.title}</Link>
                                     </li>
                                 ))
                             }
                         </ul>
                     </div>
                 </div>
-                <div className='w-[500px] h-[330px]'>
-                    <TransformWrapper>
-                        <TransformComponent>
-                            <Image className='w-[300px] h-full object-cover' width={2500} height={2500} src={Maps}
-                                   alt={'map'}/>
-                        </TransformComponent>
-                    </TransformWrapper>
+                <div className='w-[100%] md:w-[50%] h-[330px]'>
+
+                    <MapContainer center={position1} zoom={12} style={{ height: "350px", width: "100%" }}>
+                        <TileLayer
+                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                        />
+                        <Marker position={position1}>
+                            <Popup>Торговый дом РИМИНИ</Popup>
+                        </Marker>
+                        <Marker position={position2}>
+                            <Popup>"Профикс- Юг"</Popup>
+                        </Marker>
+                    </MapContainer>
                 </div>
             </div>
 
